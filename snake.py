@@ -2,7 +2,6 @@
 # when it reaches a wall it is teleported to the other side (wraps around)
 
 # The idea is to not represent positions as a (x,y) coordinate but as a single scalar value.
-import time
 
 WIDTH = 3
 HEIGHT = 5
@@ -26,7 +25,17 @@ movements = {
 
 def move(direction):
     global player_pos
-    player_pos += movements[direction]
+    def is_multi_direction(direction):
+        return ',' in direction
+
+    if is_multi_direction:
+        directions = direction.split(',')
+    else:
+        directions = [direction]
+
+    for d in directions:
+        player_pos += movements[d]
+
 
 print(f"width: {WIDTH}, height {HEIGHT}")
 print(f'valid input: {list(movements.keys())}')
