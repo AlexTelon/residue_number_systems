@@ -53,7 +53,8 @@ def get_full_representation_table(possible_values):
 # print('----')
 # print(f"modulu roof: {possible_values}, prime factors of it: {prime_factors(possible_values)}")
 
-representation = get_full_representation_table(253)
+N = 253
+representation = get_full_representation_table(N)
 # for key, value in representation.items():
 #         print(key, value)
 print(representation.values())
@@ -61,7 +62,16 @@ print(representation.values())
 import matplotlib.pyplot as plt
 import numpy as np
 
-values = list(representation.values())
+# values = list(representation.values())
+# another way to order the values.
+p_factors = prime_factors(N)
+assert len(p_factors) == 2
+x_max, y_max = p_factors
+values = []
+for x in range(x_max):
+    for y in range(y_max):
+        values.append((x,y))
+
 data = np.array(values)
 data = data.T
 x, y = data
@@ -79,6 +89,9 @@ step_time = animation_time / len(x)
 # for i in range(len(x)):
 #     print(int((i / len(x)) * 255))
 # exit()
+
+
+
 
 for i in range(len(x)):
     color = (0,((i / len(x)) * 1) ,0)

@@ -43,14 +43,36 @@ Notice that what happens. We start at (0,0). We climb up along the diagonal. Whe
 edge we wrap around but continue with the motion. In this case x is smaller than y and so we
 continue climbing up in y while wraping around x ever time we need.
 
+It is possible for us to decide upone our own way of traversing the same space as the image
+above for example. Let's say go up until we hit max y, then reset y and increment x instead.
+![image](a_manual_order_of_generation.png)
 
-This might give us another way to go about it.
+Another method might be to choose all the points closest to (0,0) first in some order. It would
+have the property that it works well with infinite large planes. But any order will do. 
 
-Why is a single number better than a tuple? Well if we have 64bit
-numbers we might have an efficient way of encoding all positions in a
-single scalar without creating cumbersome bitpatterns yourself.
+But while any order might serve as a good representation there are some nice properties assosiated
+with the sugested way given in chapter 4.7.
 
-Or maybe this is just for fun, duno. We will see!
+We now know we can generate the combinations without actually doing any modulus calculations,
+just traverse the points in the correct order.
+
+## Thinking about coordinate systems
+Im trying to figure out the usefulness of this.
+
+Imagine we have a game like snake where if you reach one end you wrap around and end up in the other end of the field.
+The theory above states that we should be able to treat x and y seperately and still get the correct positions.
+
+Imagine a 10x10 playing field.
+
+Snake head is at (9, 0) and moves to the right -> x += 1. 
+New positions is ((9 + 1) % 10, 0 % 10).
+
+This was anticlimatic, because we already knew this right. Here it would have been clear that we can treat the x and y coordinates seperately.
+
+Likewise if we have too poolar coordinates (a=255, r=1.0) and (a=615, r=1.0) we also know that to check if the positions are the same (modulu 360 degrees) we only need to check the angle alpha part. If there was a modulu for r we could check that independently.
+
+So again, something we already knew.
+
 
 
 ## Does this work for any modulu?
