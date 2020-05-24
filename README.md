@@ -31,8 +31,18 @@ sometimes possible to go the other way around.
 Imagine having a 2D graph, and that given that you know what ranges
 x and y values can be in we could represent any position (x,y) with a
 single scalar value. This is ofc trivial if we just assign a strategy in
-which order to visit all possible points in the graph. But that might be
-too slow and cumbersome if the number of potential solutions is large.
+which order to visit all possible points in the graph. In fact,
+this is what this does for you.
+
+The image below plots all numbers [0-252] and has the prime factorization of 253 = 11 * 23.
+When creating a tuple (n % 11, n % 23) for all n [0..252] we get all the points shown below.
+The coloring indicates the order in chich they are created. It starts as black and gets
+greener over time.
+![image](order_of_generation.png)
+Notice that what happens. We start at (0,0). We climb up along the diagonal. When we reach an
+edge we wrap around but continue with the motion. In this case x is smaller than y and so we
+continue climbing up in y while wraping around x ever time we need.
+
 
 This might give us another way to go about it.
 
@@ -104,4 +114,7 @@ It is clear that the tuple representation is not enough to disambuigate which nu
 (1, 1) could represent both 1 and 3 for instance.
 
 So when choosing max_modulus a tip is to look at tables of non-square semiprimes for example as they are good candidates.
-See this [oeis AOO6881 link](https://oeis.org/A006881/b006881.txt) for a list of all such numbers between 1 and 10 000.
+See this [oeis AOO6881 link](https://oeis.org/A006881/b006881.txt) for a list of all such numbers between 1 and 10 000. I even double checked, none of these values gives us a duplicate! So the list seems to be well generated.
+
+### In what order are the tuples generated
+I did not realise this at the start. But we will use the full space within the x and y domains. 
