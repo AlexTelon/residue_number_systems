@@ -16,11 +16,15 @@ def print_player_coordinates():
     print(convert_to_tuple(player_pos))
 
 import operator
+unit_vectors = {
+    'x':    6,
+    'y':    10,
+}
 movements = {
-    'up':    10,
-    'down':  -10,
-    'right': 6,
-    'left':  -6,
+    'up':       unit_vectors['y'],
+    'down':     -unit_vectors['y'],
+    'right':    unit_vectors['x'],
+    'left':     -unit_vectors['x'],
 }
 
 def move(direction):
@@ -30,6 +34,7 @@ def move(direction):
 
     if is_multi_direction:
         directions = direction.split(',')
+        directions = [d.strip() for d in directions]
     else:
         directions = [direction]
 
@@ -41,7 +46,7 @@ print(f"width: {WIDTH}, height {HEIGHT}")
 print(f'valid input: {list(movements.keys())}')
 print()
 
-last_instruction = ''
+last_instruction = 'up, down' # provide a nop default instruction
 while True:
     print_player_coordinates()
     instruction = input()
