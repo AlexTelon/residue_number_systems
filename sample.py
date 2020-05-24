@@ -22,12 +22,25 @@ def get_residue_representation(num, possible_values):
     return tuple([num % p for p in prime_factors(possible_values)])
         
 
-# representation = {i:(i % 3, i % 5) for i in range(n)}
-possible_values = 255
-representation = {i:get_residue_representation(i, possible_values) for i in range(possible_values)}
+def get_full_representation_table(possible_values):
+    return {i:get_residue_representation(i, possible_values) for i in range(possible_values)}
 
-for key, value in representation.items():
-    print(key, value)
+# The prime facors should be relatively prime. non-square semiprimes are good candidates as they have 2 factors and they are all prime
+# let us investigate what happens with different values.
+for i in range(100):
+    table = get_full_representation_table(i)
+    def unique_were_found(values):
+        return len(values) == len(set(values))
+    
+    # we want to check if all keys have unique values.
+    if not unique_were_found(table.values()):
+        print(f"{i} duplicates found! - prime factors: {prime_factors(i)}")
 
-print('----')
-print(f"modulu roof: {possible_values}, prime factors of it: {prime_factors(possible_values)}")
+
+
+# for key, value in representation.items():
+#         print(key, value)
+# print('----')
+# print(f"modulu roof: {possible_values}, prime factors of it: {prime_factors(possible_values)}")
+
+print(get_full_representation_table(4))
