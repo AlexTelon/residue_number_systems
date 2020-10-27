@@ -3,9 +3,77 @@
 
 # The idea is to not represent positions as a (x,y) coordinate but as a single scalar value.
 
-WIDTH = 3
-HEIGHT = 5
+def prime_factors(n):
+    #https://stackoverflow.com/a/22808285/1723886
+    i = 2
+    factors = []
+    while i * i <= n:
+        if n % i:
+            i += 1
+        else:
+            n //= i
+            factors.append(i)
+    if n > 1:
+        factors.append(n)
+    return factors
+
+def get_residue_representation(num, possible_values):
+    """Given a number return "num mod p_i" for all prime factors p_i of possible_values. Returned as a tuple, in order."""
+    # it is taken for given that if possible_values is 15 then valid num are [0-14] inclusive.
+    return tuple([num % p for p in prime_factors(possible_values)])
+
+def get_full_representation_table(possible_values):
+    return {i:get_residue_representation(i, possible_values) for i in range(possible_values)}
+
+def gcd(m, n):
+    if m == 0:
+        return n
+    else:
+        return gcd(n % m, m)
+
+def extended_gcd(a,b):
+    # https://www.discoverbits.in/post/extended-euclid-algorithm-for-gcd-in-python/
+	if (b == 0):
+        # if b = 0, then return g = a, m=1, n=0
+		return (a,1,0)	
+	else:
+        # if b is not 0, then recursively call the function to get the value of
+        # g,m,n at each step.
+		(g,m,n) = extended_gcd(b, a%b)
+		return(g, n, m-(a//b)*n )
+
+# find m' and n' such that m * m' + n * n' = 1
+# m = 3
+# n = 83
+
+# print(extended_gcd(n, m))
+
+# exit()
+
+# 253 = 11 * 23
+# 249 = 3 * 83
+WIDTH = 11
+HEIGHT = 23
 volume = WIDTH * HEIGHT
+m = WIDTH
+n = HEIGHT
+
+_, m_, n_ = extended_gcd(m, n)
+print(extended_gcd(m, n))
+
+unit_vectors = {
+    'x':    WIDTH*m_,
+    'y':    HEIGHT*n_,
+}
+
+# get all combinations to brute force find which values represent the unit vectors
+for key, value in get_full_representation_table(volume).items():
+    x, y = value
+    if value == (0, 1):
+        unit_vectors['y'] = key
+    if value == (1, 0):
+        unit_vectors['x'] = key
+
 
 player_pos = 0
 
@@ -15,11 +83,7 @@ def convert_to_tuple(player_pos):
 def print_player_coordinates():
     print(convert_to_tuple(player_pos))
 
-import operator
-unit_vectors = {
-    'x':    6,
-    'y':    10,
-}
+
 movements = {
     'up':       unit_vectors['y'],
     'down':     -unit_vectors['y'],

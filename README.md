@@ -73,6 +73,41 @@ Likewise if we have too poolar coordinates (a=255, r=1.0) and (a=615, r=1.0) we 
 
 So again, something we already knew.
 
+I created snake.py as a sample application where we modify the position only as a scalar and then translate to a (x,y) coordinate only when we need to display it.
+
+**realisation about snake** The thing is that while this works, there again is an anticlimatic realization.
+We have all done this before. A 2D array is commonly just a 1D array in which we access the data in a certain pattern.
+Often the pattern is 'array[x + y * WIDTH]'. One could, which is often done, use the value 'x + y * WIDTH' directly.
+Here moving right/left is just  +/- 1. Moving up/down is +/- WIDHT which is a very simple system that works very well.
+
+So the idea of using a scalar value to represent a 2D coordinate is already done in nifty hacks. This hack has the upside that it always works. The primefactor method only works for 2D coordinates when the total volumne of the space has 2 primefactors. So using 15 works due to 3*5 being available. But 100 wont work! So 10x10 board is not possible. So it does not feel like a good solution for these situations.
+
+
+### How to find the unit vector representation?
+
+If we have choosen to represent (x,y) positions for instance with a single scalar value it would be useful to know what scalar values represent the unit vectors (0, 1) and (1, 0).
+
+If this value is known then we can move a position up by doing 7 + 6 for instance instead of adding in tuple space.
+
+Again the book provides an answer. On page 128 it is mentioned that Euclid's algorithm can be used.
+
+let m and n be the width and height such that the tuples are calculated by (num % n, num % m). 
+In our previous example with modulu 15 n = 3 and m = 5.
+
+    find m' and n' such that m * m' + n * n' = 1
+
+This can be done with Euclid's algorithm (4.4, page 103).
+
+    gcd(0, n) = n
+    gcd(m, n) = gcd(n mod m, m)
+
+    def gcd(m, n):
+        if m == 0:
+            return n
+        else:
+            return gcd(n % m, m)
+
+
 
 
 ## Does this work for any modulu?
