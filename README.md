@@ -1,8 +1,6 @@
-# Trying out Residu number systems.
+# Trying out Residue number systems
 
-Chapter 4.7 in Concrete Mathematics.
-
-Example from p 127 coded
+Chapter 4.7 in Concrete Mathematics. Example from p.127, but in code.
 
 Can generate an alternative representation for values now.
 
@@ -36,22 +34,22 @@ this is what this does for you.
 
 The image below plots all numbers [0-252] and has the prime factorization of 253 = 11 * 23.
 When creating a tuple (n % 11, n % 23) for all n [0..252] we get all the points shown below.
-The coloring indicates the order in chich they are created. It starts as black and gets
+The coloring indicates the order in which they are created. It starts as black and gets
 greener over time.
 ![image](order_of_generation.png)
-Notice that what happens. We start at (0,0). We climb up along the diagonal. When we reach an
+Notice we start at (0,0) and climb up along the diagonal. When we reach an
 edge we wrap around but continue with the motion. In this case x is smaller than y and so we
 continue climbing up in y while wraping around x ever time we need.
 
-It is possible for us to decide upone our own way of traversing the same space as the image
+It is possible for us to decide upon our own way of traversing the same space as the image
 above for example. Let's say go up until we hit max y, then reset y and increment x instead.
 ![image](a_manual_order_of_generation.png)
 
 Another method might be to choose all the points closest to (0,0) first in some order. It would
 have the property that it works well with infinite large planes. But any order will do. 
 
-But while any order might serve as a good representation there are some nice properties assosiated
-with the sugested way given in chapter 4.7.
+But while any order might serve as a good representation there are some nice properties associated
+with the suggested way given in chapter 4.7.
 
 We now know we can generate the combinations without actually doing any modulus calculations,
 just traverse the points in the correct order.
@@ -67,9 +65,9 @@ Imagine a 10x10 playing field.
 Snake head is at (9, 0) and moves to the right -> x += 1. 
 New positions is ((9 + 1) % 10, 0 % 10).
 
-This was anticlimatic, because we already knew this right. Here it would have been clear that we can treat the x and y coordinates seperately.
+This was anticlimatic, because we already knew this right. Here it would have been clear that we can treat the x and y coordinates separately.
 
-Likewise if we have too poolar coordinates (a=255, r=1.0) and (a=615, r=1.0) we also know that to check if the positions are the same (modulu 360 degrees) we only need to check the angle alpha part. If there was a modulu for r we could check that independently.
+Likewise if we have two poolar coordinates (a=255, r=1.0) and (a=615, r=1.0) we also know that to check if the positions are the same (modulu 360 degrees) we only need to check the angle alpha part. If there was a modulu for r we could check that independently.
 
 So again, something we already knew.
 
@@ -167,7 +165,7 @@ The full representation when max_modulus is 4 is the following:
     1: (1, 1),
     2: (0, 0),
     3: (1, 1)
-It is clear that the tuple representation is not enough to disambuigate which number it is representing.
+It is clear that the tuple representation is not enough to disambiguate which number it is representing.
 (1, 1) could represent both 1 and 3 for instance.
 
 So when choosing max_modulus a tip is to look at tables of non-square semiprimes for example as they are good candidates.
